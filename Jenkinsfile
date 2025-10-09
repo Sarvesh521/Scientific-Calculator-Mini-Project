@@ -7,11 +7,10 @@ pipeline {
         IMAGE_NAME = "${DOCKERHUB_USERNAME}/scientific-calculator"
     }
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-                git branch: 'main', url: 'https://github.com/Sarvesh521/Scientific-Calculator-Mini-Project.git'                
-            }
+        stage('1. Checkout') { 
+            steps { 
+                checkout scm 
+            } 
         }
         stage('2. Test') {
             steps {
@@ -32,11 +31,12 @@ pipeline {
         stage('4. Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
-                        // Also tag this build as the 'latest'
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push('latest')
-                    }
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
+                    sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
+                    sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest"
+                    sh "docker push ${IMAGE_NAME}:latest"
+                }
                 }
             }
         }

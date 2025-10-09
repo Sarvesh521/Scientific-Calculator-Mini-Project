@@ -12,3 +12,9 @@ class TestCalculator(unittest.TestCase):
         self.assertEqual(factorial(1), 1)
         self.assertIsNone(factorial(-1))
         self.assertIsNone(factorial(1.5))
+
+    def test_natural_log(self):
+        self.assertEqual(natural_log(1), 0)
+        self.assertAlmostEqual(natural_log(math.e), 1)
+        self.assertIsNone(natural_log(0))
+        self.assertIsNone(natural_log(-5))

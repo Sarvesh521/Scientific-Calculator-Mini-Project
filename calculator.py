@@ -13,15 +13,17 @@ def natural_log(x):
         return None
     return math.log(x)
 
+def power(x, b):
+    return math.pow(x, b)
 
 def display_menu():
     print("\n--- Scientific Calculator ---", flush=True)
     print("1. Square Root (√x)", flush=True)
     print("2. Factorial (!x)", flush=True)
     print("3. Natural Logarithm (ln(x))", flush=True)
+    print("4. Power (x^b)", flush=True)
     print("5. Exit", flush=True)
     print("---------------------------------", flush=True)
-
 
 def main():
     while True:
@@ -44,7 +46,7 @@ def main():
                     print("Invalid input. Factorial is not defined for negative numbers or non-integers.", flush=True)
             except ValueError:
                 print("Invalid input. Please enter an integer.", flush=True)
-     
+
         elif choice == '3':
             try:
                 num = float(input("Enter a positive number: "))
@@ -56,6 +58,13 @@ def main():
             except ValueError:
                 print("Invalid input. Please enter a number.", flush=True)
         
+        elif choice == '4':
+            try:
+                base = float(input("Enter the base (x): "))
+                exponent = float(input("Enter the exponent (b): "))
+                print(f"Result: {power(base, exponent)}", flush=True)
+            except ValueError:
+                print("Invalid input. Please enter numbers.", flush=True)
 
         elif choice == '5':
             print("Exiting calculator...", flush=True)

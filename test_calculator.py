@@ -1,5 +1,5 @@
 import unittest
-from calculator import square_root, factorial
+from calculator import square_root, factorial, natural_log
 
 class TestCalculator(unittest.TestCase):
     def test_square_root(self):

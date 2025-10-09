@@ -7,10 +7,11 @@ pipeline {
         IMAGE_NAME = "${DOCKERHUB_USERNAME}/scientific-calculator"
     }
     stages {
-        stage('1. Checkout') { 
-            steps { 
-                checkout scm 
-            } 
+        stage('Checkout') {
+            steps {
+                checkout scm
+                git branch: 'main', url: 'https://github.com/Sarvesh521/Scientific-Calculator-Mini-Project.git'                
+            }
         }
         stage('2. Test') {
             steps {

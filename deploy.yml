@@ -4,19 +4,20 @@
   tasks:
     - name: Stop and remove any existing container
       community.docker.docker_container:
-        name: "scientific-calculator-app"
+        name: "sci-calc"
         state: absent
+        force_kill: yes
 
     - name: Pull the latest Docker image
       community.docker.docker_image:
         name: "sarvesh717/scientific-calculator:latest"
         source: pull
 
-    - name: Run the application container in the background
+    - name: Run the application container in the background with interactive support
       community.docker.docker_container:
-        name: "scientific-calculator-app"
+        name: "sci-calc"
         image: "sarvesh717/scientific-calculator:latest"
         state: started
         detach: yes
-        # This command keeps the container running so you can access it later
-        command: tail -f /dev/null
+        tty: yes
+        interactive: yes

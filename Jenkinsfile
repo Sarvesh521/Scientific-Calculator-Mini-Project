@@ -42,11 +42,10 @@ pipeline {
         // --- NEW STAGE ADDED ---
         stage('5. Deploy with Ansible') {
             steps {
-                // Use the withCredentials wrapper to securely access the password
                 withCredentials([string(credentialsId: 'ansible-sudo-pass', variable: 'SUDO_PASS')]) {
-                    // This command runs your playbook, providing the password via standard input
+                    // Use echo and a pipe '|' which is universally supported
                     sh '''
-                        ansible-playbook -i inventory deploy.yml --become-pass-stdin <<< "$SUDO_PASS"
+                        echo "$SUDO_PASS" | ansible-playbook -i inventory deploy.yml --become-pass-stdin
                     '''
                 }
             }

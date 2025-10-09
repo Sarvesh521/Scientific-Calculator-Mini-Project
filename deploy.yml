@@ -1,0 +1,25 @@
+---
+- name: Deploy Scientific Calculator
+  hosts: local
+  become: yes
+  vars:
+    # We will default to pulling the 'latest' tag
+    docker_image: your-dockerhub-username/scientific-calculator:latest
+    container_name: scientific-calculator-app
+  tasks:
+    - name: Pull image from Docker Hub
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+    - name: Stop and remove existing container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+    - name: Run container from the new image
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        interactive: yes
+        tty: yes
+        detach: no

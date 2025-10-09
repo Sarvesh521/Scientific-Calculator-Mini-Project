@@ -1,25 +1,28 @@
 ---
-- name: Deploy Scientific Calculator
-  hosts: local
-  become: yes
+- name: Deploy Scientific Calculator Docker Container
+  hosts: localhost  # Target the host defined in our inventory
+  become: yes       # Use 'sudo' for Docker commands
+
   vars:
-    # We will default to pulling the 'latest' tag
     docker_image: sarvesh717/scientific-calculator:latest
     container_name: scientific-calculator-app
+
   tasks:
-    - name: Pull image from Docker Hub
+    - name: 1. Pull the latest Docker image from Docker Hub
       community.docker.docker_image:
         name: "{{ docker_image }}"
         source: pull
-    - name: Stop and remove existing container
+
+    - name: 2. Stop and remove the existing container (if any)
       community.docker.docker_container:
         name: "{{ container_name }}"
         state: absent
-    - name: Run container from the new image
+
+    - name: 3. Run the application in a new container
       community.docker.docker_container:
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
         state: started
-        interactive: yes
-        tty: yes
-        detach: no
+        interactive: yes # Required to interact with your command-line app
+        tty: yes       # Required to interact with your command-line app
+        detach: no     # Run in the foreground to see the menu

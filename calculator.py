@@ -10,10 +10,12 @@ def factorial(x):
     return math.factorial(x)
 
 def display_menu():
-    print("\n--- Scientific Calculator v2.0 ---")
-    print("1. Square Root (√x)")
-    print("2. Factorial (!x)") 
-    print("5. Exit")
+
+    print("\n--- Scientific Calculator ---", flush=True)
+    print("1. Square Root (√x)", flush=True)
+    print("2. Factorial (!x)", flush=True)
+    print("5. Exit", flush=True)
+    print("---------------------------------", flush=True)
 
 def main():
     while True:
@@ -22,25 +24,26 @@ def main():
         if choice == '1':
             try:
                 num = float(input("Enter a number: "))
-                print(f"Result: {square_root(num)}")
+                print(f"Result: {square_root(num)}", flush=True)
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print("Invalid input. Please enter a number.", flush=True)
 
         elif choice == '2':
             try:
                 num = int(input("Enter a non-negative integer: "))
                 result = factorial(num)
                 if result is not None:
-                    print(f"Result: {result}")
+                    print(f"Result: {result}", flush=True)
                 else:
-                    print("Invalid input. Factorial is not defined for negative numbers or non-integers.")
+                    print("Invalid input. Factorial is not defined for negative numbers or non-integers.", flush=True)
             except ValueError:
-                print("Invalid input. Please enter an integer.")
+                print("Invalid input. Please enter an integer.", flush=True)
 
-        elif choice == '5': 
+        elif choice == '5':
+            print("Exiting calculator...", flush=True)
             break
-        else: 
-            print("Invalid choice.")
+        else:
+            print("Invalid choice.", flush=True)
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()

@@ -39,15 +39,10 @@ pipeline {
                 }
             }
         }
-        // --- NEW STAGE ADDED ---
+
         stage('5. Deploy with Ansible') {
             steps {
-                withCredentials([string(credentialsId: 'ansible-sudo-pass', variable: 'SUDO_PASS')]) {
-                    // Use echo and a pipe '|' which is universally supported
-                    sh '''
-                        echo "$SUDO_PASS" | ansible-playbook -i inventory deploy.yml --become-pass-stdin
-                    '''
-                }
+                sh 'ansible-playbook -i inventory deploy.yml'
             }
         }
     }

@@ -1,7 +1,7 @@
 ---
 - name: Deploy Scientific Calculator Docker Container
   hosts: localhost  # Target the host defined in our inventory
-  become: yes       # Use 'sudo' for Docker commands
+  # become: yes       # Use 'sudo' for Docker commands
 
   vars:
     docker_image: sarvesh717/scientific-calculator:latest

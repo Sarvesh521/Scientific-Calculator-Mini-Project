@@ -4,7 +4,7 @@
   become: yes
   vars:
     # We will default to pulling the 'latest' tag
-    docker_image: your-dockerhub-username/scientific-calculator:latest
+    docker_image: sarvesh717/scientific-calculator:latest
     container_name: scientific-calculator-app
   tasks:
     - name: Pull image from Docker Hub

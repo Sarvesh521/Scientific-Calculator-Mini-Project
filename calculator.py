@@ -28,7 +28,7 @@ def display_menu():
 
 def main():
     print("Calculator application started. Waiting for connection...", flush=True)
-    time.sleep(6)
+    time.sleep(75)
     while True:
         display_menu()
         choice = input("Enter your function choice: ")

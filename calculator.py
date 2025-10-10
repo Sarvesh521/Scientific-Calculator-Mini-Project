@@ -1,4 +1,5 @@
 import math
+import time
 
 def square_root(x):
     return math.sqrt(x) if x >= 0 else None
@@ -26,9 +27,11 @@ def display_menu():
     print("---------------------------------", flush=True)
 
 def main():
+    print("Calculator application started. Waiting for connection...", flush=True)
+    time.sleep(6)
     while True:
         display_menu()
-        choice = input("Enter your choice: ")
+        choice = input("Enter your function choice: ")
         if choice == '1':
             try:
                 num = float(input("Enter a number: "))

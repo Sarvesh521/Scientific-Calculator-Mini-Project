@@ -136,7 +136,6 @@ Most of these are installed automatically if you select **“Install suggested p
 ---
 
 
-
 #### How to Install
 
 1. Go to **Manage Jenkins → Plugins → Available plugins**

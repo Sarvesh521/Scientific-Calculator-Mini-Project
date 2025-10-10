@@ -31,7 +31,7 @@ def main():
     time.sleep(60)
     while True:
         display_menu()
-        choice = input("Enter your choice: ")
+        choice = input("Enter your function choice: ")
         if choice == '1':
             try:
                 num = float(input("Enter a number: "))

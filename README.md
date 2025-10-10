@@ -155,6 +155,11 @@ Most of these are installed automatically if you select **“Install suggested p
 - **Username:** Your Docker Hub username  
 - **Password:** Your Docker Hub password or access token  
 - **ID:** `dockerhub-credentials`
+- **Configure with Jenkins** - Enter the following command in terminal. This allows Jenkins to communicate directly with the Docker daemon to build images and run containers without requiring
+sudo
+```bash
+sudo usermod -aG docker jenkins
+```
 
 #### GitHub Credentials
 

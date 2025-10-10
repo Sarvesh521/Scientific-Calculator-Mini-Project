@@ -121,8 +121,6 @@ cd Scientific-Calculator-Mini-Project
 
 ### 3. Configure Jenkins Credentials
 
-You need to store **two sets of credentials** in Jenkins.
-
 #### Docker Hub Credentials
 
 - Navigate: **Manage Jenkins → Credentials → (global) → Add Credentials**
@@ -146,9 +144,99 @@ You need to give Jenkins access to your GitHub repository so it can pull code an
 - **ID:** `github-credentials`
 - **Description:** *Access token for GitHub repository integration.*
 
+#### Email Notification Setup
+
+To receive build status notifications (success, failure, etc.) via email, configure the **Email Extension Plugin** in Jenkins.
+
 ---
 
-### 4. Create the Jenkins Job
+### Step 1: Install the Email Extension Plugin
+
+1. Go to **Manage Jenkins → Plugins → Available plugins**  
+2. Search for **Email Extension Plugin**  
+3. Check the box and click **Install without restart**
+
+---
+
+### Step 2: Configure SMTP Settings
+
+1. Go to **Manage Jenkins → System**  
+2. Scroll down to **Extended E-mail Notification**
+3. Fill in your SMTP server details:
+
+   | Field | Example (for Gmail) |
+   |--------|--------------------|
+   | SMTP server | `smtp.gmail.com` |
+   | SMTP Port | `25` |
+   | SMTP Username | `your_email@gmail.com` |
+   | SMTP Password | *App password (not your Gmail password)* |
+   | Default user e-mail suffix | `@gmail.com` |
+
+4. Click **Test configuration** to verify that emails are working.  
+   (You’ll receive a test message if it’s set up correctly.)
+
+---
+
+### Step 3: Allow App Passwords (if using Gmail)
+
+If using Gmail, you need to create an **App Password**:
+
+1. Go to **Google Account → Security → App Passwords**
+2. Select **App:** Mail → **Device:** Other (Custom name, e.g. “Jenkins”)
+3. Copy the 16-character app password.
+4. Use this password as your SMTP credential in Jenkins.
+
+---
+
+### Step 4: Configure Email in the Pipeline
+
+Add an **email notification** stage in your `Jenkinsfile`:
+
+```groovy
+post {
+    success {
+        mail to: 'your_email@gmail.com',
+             subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Good news! The build completed successfully."
+    }
+    failure {
+        mail to: 'your_email@gmail.com',
+             subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Something went wrong. Please check the Jenkins logs."
+    }
+}
+```
+---
+### 4. Essential Jenkins Plugins
+
+
+Most of these are installed automatically if you select **“Install suggested plugins”** during the initial Jenkins setup.
+
+---
+
+#### Plugin List
+
+| Plugin Name | Why It’s Needed |
+|--------------|----------------|
+| **Pipeline** | This is the **core plugin suite** that allows Jenkins to interpret and execute `Jenkinsfile` scripts. It provides essential features such as `pipeline`, `agent`, `stages`, `steps`, and `post` blocks. Without it, no pipeline will run. |
+| **Git** | Enables Jenkins to connect to your GitHub repository using the `checkout scm` step and fetch the project source code. Required for version control integration. |
+| **Docker Pipeline** *(docker-workflow)* | Provides all **Docker-related steps** like `docker.build()`, `docker.image().inside()`, and `docker.withRegistry()`. This plugin is essential for building, tagging, and pushing Docker images as part of your CI/CD pipeline. |
+| **Credentials** & **Credentials Binding** | These plugins allow you to **securely store and use credentials** (like Docker Hub tokens, GitHub PATs, or sudo passwords) in your pipeline using the `withCredentials` step, without exposing them in logs. |
+| **Email Extension** *(email-ext)* | Provides the enhanced `mail` step used in the `post` block to send email notifications on build success or failure. It replaces and improves upon the older “Mailer” plugin. |
+| **Pipeline: Multibranch** | Required for the **Multibranch Pipeline** job type. It enables Jenkins to automatically discover, manage, and build branches in your GitHub repository that contain a `Jenkinsfile`. |
+
+---
+
+#### How to Install
+
+1. Go to **Manage Jenkins → Plugins → Available plugins**
+2. Search for each of the plugins listed above.
+3. Check their boxes and click **Install without restart**
+4. Once installation completes, restart Jenkins to activate them.
+
+---
+
+### 5. Create the Jenkins Job
 
 1. From the Jenkins dashboard, click **New Item**.  
 2. Enter a name (e.g., `Scientific-Calculator-Pipeline`).  
@@ -161,7 +249,7 @@ You need to give Jenkins access to your GitHub repository so it can pull code an
 
 ---
 
-### 5. Expose Jenkins with ngrok
+### 6. Expose Jenkins with ngrok
 
 Open a new terminal and start **ngrok** to expose port 8080.
 
@@ -173,7 +261,7 @@ Copy the **HTTPS forwarding URL** provided by ngrok.
 
 ---
 
-### 6. Configure GitHub Webhook
+### 7. Configure GitHub Webhook
 
 1. Go to your GitHub repo → **Settings → Webhooks → Add webhook**.  
 2. **Payload URL:** Paste your ngrok URL and add `/github-webhook/` at the end.  
@@ -183,7 +271,7 @@ Copy the **HTTPS forwarding URL** provided by ngrok.
 
 ---
 
-### 7. Usage: Running the Project
+### 8. Usage: Running the Project
 
 
 #### Make a Code Change

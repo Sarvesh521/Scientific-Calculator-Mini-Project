@@ -189,13 +189,13 @@ To receive build status notifications (success, failure, etc.) via email, config
 #### Step 2: Configure SMTP Settings
 
 1. Go to **Manage Jenkins → System**  
-2. Scroll down to **Extended E-mail Notification**
+2. Scroll down to **E-mail Notification**
 3. Fill in your SMTP server details:
 
    | Field | Example (for Gmail) |
    |--------|--------------------|
    | SMTP server | `smtp.gmail.com` |
-   | SMTP Port | `25` |
+   | SMTP Port | `465` |
    | SMTP Username | `your_email@gmail.com` |
    | SMTP Password | *App password (not your Gmail password)* |
    | Default user e-mail suffix | `@gmail.com` |

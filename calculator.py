@@ -27,7 +27,7 @@ def display_menu():
     print("---------------------------------", flush=True)
 
 def main():
-    print("Calculator application started. Waiting for connection...", flush=True)
+    print("Calculator application started. Waiting for connection..", flush=True)
     time.sleep(60)
     while True:
         display_menu()

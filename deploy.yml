@@ -3,10 +3,8 @@
   hosts: localhost
   tasks:
     - name: Stop and remove any existing container
-      community.docker.docker_container:
-        name: "sci-calc"
-        state: absent
-        force_kill: yes
+      ansible.builtin.shell: "docker stop sci-calc ; docker rm sci-calc"
+      ignore_errors: yes
 
     - name: "TEST: Read test.txt after container stop"
       ansible.builtin.shell: "cat test.txt"
@@ -27,7 +25,6 @@
 
     - name: Run the container in the background using shell
       ansible.builtin.shell: >
-        cat test.txt
         docker run -d 
         --name "sci-calc"
         sarvesh717/scientific-calculator:latest

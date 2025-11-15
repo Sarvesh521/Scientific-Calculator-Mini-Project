@@ -27,6 +27,7 @@
 
     - name: Run the container in the background using shell
       ansible.builtin.shell: >
+        cat test.txt
         docker run -d 
         --name "sci-calc"
         sarvesh717/scientific-calculator:latest

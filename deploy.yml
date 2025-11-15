@@ -8,10 +8,22 @@
         state: absent
         force_kill: yes
 
+    - name: "TEST: Read test.txt after container stop"
+      ansible.builtin.shell: "cat test.txt"
+      register: cat_output_1
+    - name: "TEST: Display output 1"
+      ansible.builtin.debug:
+        var: cat_output_1.stdout
+
     - name: Pull the latest Docker image
-      community.docker.docker_image:
-        name: "sarvesh717/scientific-calculator:latest"
-        source: pull
+      ansible.builtin.shell: "docker pull sarvesh717/scientific-calculator:latest"
+
+    - name: "TEST: Read test.txt after image pull"
+      ansible.builtin.shell: "cat test.txt"
+      register: cat_output_2
+    - name: "TEST: Display output 2"
+      ansible.builtin.debug:
+        var: cat_output_2.stdout
 
     - name: Run the container in the background using shell
       ansible.builtin.shell: >
@@ -19,3 +31,10 @@
         --name "sci-calc"
         sarvesh717/scientific-calculator:latest
         tail -f /dev/null
+    
+    - name: "TEST: Read test.txt after container run"
+      ansible.builtin.shell: "cat test.txt"
+      register: cat_output_3
+    - name: "TEST: Display output 3"
+      ansible.builtin.debug:
+        var: cat_output_3.stdout

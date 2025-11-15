@@ -13,11 +13,9 @@
         name: "sarvesh717/scientific-calculator:latest"
         source: pull
 
-    - name: Run the application container in the background with interactive support
-      community.docker.docker_container:
-        name: "sci-calc"
-        image: "sarvesh717/scientific-calculator:latest"
-        state: started
-        detach: yes
-        tty: yes
-        interactive: yes
+    - name: Run the container in the background using shell
+      ansible.builtin.shell: >
+        docker run -d 
+        --name "sci-calc"
+        sarvesh717/scientific-calculator:latest
+        tail -f /dev/null

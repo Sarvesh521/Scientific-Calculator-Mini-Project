@@ -17,11 +17,7 @@
       ansible.builtin.shell: "docker pull sarvesh717/scientific-calculator:latest"
 
     - name: "TEST: Read test.txt after image pull"
-      ansible.builtin.shell: "cat test.txt"
-      register: cat_output_2
-    - name: "TEST: Display output 2"
-      ansible.builtin.debug:
-        var: cat_output_2.stdout
+      ansible.builtin.shell: "touch test1.txt"
 
     - name: Run the container in the background using shell
       ansible.builtin.shell: >

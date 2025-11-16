@@ -20,8 +20,6 @@ def power(x, b):
 def display_menu():
     print("\n--- Scientific Calculator ---", flush=True)
     print("1. Square Root (√x)", flush=True)
-    # print("2. Factorial (!x", flush=True)
-    print("3. Natural Logarithm (ln(x))", flush=True)
     print("4. Power (x^b)", flush=True)
     print("5. Exit", flush=True)
     print("---------------------------------", flush=True)
